@@ -1,23 +1,17 @@
 const fs = require('fs');
 
-const filePaths = process.argv.slice(2);
-let concatenatedContent = '';
+const filePath = process.argv[2];
 
-filePaths.forEach((filePath) => {
-  fs.readFile(filePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error(`Error reading file ${filePath}: ${err}`);
-      return;
-    }
-    concatenatedContent += data;
-    if (filePaths.indexOf(filePath) === filePaths.length - 1) {
-      fs.writeFile('output.txt', concatenatedContent, (err) => {
-        if (err) {
-          console.error(`Error writing file: ${err}`);
-          return;
-        }
-        console.log('Concatenated content written to output.txt');
-      });
-    }
-  });
+fs.readFile(filePath, 'utf8', (err, data) => {
+  if (err) {
+    console.error(`Error reading file ${filePath}: ${err}`);
+    return;
+  }
+
+  try {
+    const jsonData = JSON.parse(data);
+    // TODO: Perform error handling for invalid file format and missing data
+  } catch (err) {
+    console.error('Invalid JSON file format. Please provide a valid JSON file.');
+  }
 });
